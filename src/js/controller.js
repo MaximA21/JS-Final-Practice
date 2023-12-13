@@ -4,8 +4,9 @@ import * as model from "./model"
 import recipeView from "./views/recipeView"
 import searchView from "./views/searchView"
 import resultsView from "./views/resultsView"
+import paginationView from "./views/paginationView";
 
-if (module.hot) module.hot.accept()
+//if (module.hot) module.hot.accept()
 
 const controlRecipes = async function () {
   try {
@@ -32,15 +33,27 @@ const controlSearchResults = async function () {
     //get search query
     const query = searchView.getQuery()
     if (!query) return
+    //load search
     await model.loadSearchResults(query)
-    resultsView.render(model.state.search.result)
+    //render results
+    resultsView.render(model.getSearchResultPage())
+    //render pagination buttons
+    paginationView.render(model.state.search)
   } catch (e) {
 
   }
+}
+const controlPagination = function (goToPage) {
+  console.log(goToPage)
+  //render results
+  resultsView.render(model.getSearchResultPage(goToPage))
+  //render pagination buttons
+  paginationView.render(model.state.search)
 }
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes)
   searchView.addHandlerSearch(controlSearchResults)
+  paginationView.addHandlerClick(controlPagination)
 }
 init()
