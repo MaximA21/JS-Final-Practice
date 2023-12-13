@@ -1,18 +1,20 @@
 import icons from "url:../../img/icons.svg"
 export default class View {
-    #data
+    _data
     render(data) {
-        this.#data = data
-        const markup = this.#generateMarkup()
-        this.#clear()
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup)
+        if (!data || (Array.isArray(data) && data.length === 0)) return this.renderError()
+
+        this._data = data
+        const markup = this._generateMarkup()
+        this._clear()
+        this._parentElement.insertAdjacentHTML("afterbegin", markup)
     }
 
-    #clear() {
-        this.#parentElement.innerHTML = ""
+    _clear() {
+        this._parentElement.innerHTML = ""
     }
 
-    renderError(message = this.#errorMessage) {
+    renderError(message = this._errorMessage) {
         const markup = `<div class="error">
             <div>
               <svg>
@@ -21,11 +23,11 @@ export default class View {
             </div>
             <p>${message}</p>
           </div>`
-        this.#clear()
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup)
+        this._clear()
+        this._parentElement.insertAdjacentHTML("afterbegin", markup)
     }
 
-    renderMessage(message = this.#message) {
+    renderMessage(message = this._message) {
         const markup = `<div class="message">
             <div>
               <svg>
@@ -34,8 +36,8 @@ export default class View {
             </div>
             <p>${message}</p>
           </div>`
-        this.#clear()
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup)
+        this._clear()
+        this._parentElement.insertAdjacentHTML("afterbegin", markup)
     }
 
 
@@ -48,7 +50,7 @@ export default class View {
             <use href="${icons}#icon-loader"></use>
           </svg>
         </div>`
-        this.#clear()
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup)
+        this._clear()
+        this._parentElement.insertAdjacentHTML("afterbegin", markup)
     }
 }
