@@ -1,5 +1,4 @@
 import View from "./View";
-import icons from "url:../../img/icons.svg"
 class ResultsView extends View {
     _parentElement = document.querySelector(".results")
     _message = ""
@@ -11,7 +10,7 @@ class ResultsView extends View {
         return this._data.map(this._generateMarkupPreview).join("")
     }
     _generateMarkupPreview(result) {
-        //preview__link--active
+        const id = window.location.hash.slice(1)
         /*
 
          <div class="preview__user-generated">
@@ -22,7 +21,7 @@ class ResultsView extends View {
 
          */
         return `   <li class="preview">
-            <a class="preview__link" href="#${result.id}">
+            <a class="preview__link ${result.id === id ? "preview__link--active" : ""}" href="#${result.id}">
               <figure class="preview__fig">
                 <img src="${result.image}" alt="${result.title}" />
               </figure>
