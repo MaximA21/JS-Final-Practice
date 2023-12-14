@@ -1,15 +1,8 @@
 import View from "./View";
-class ResultsView extends View {
-    _parentElement = document.querySelector(".results")
-    _message = ""
-    _errorMessage = "No recipes found for your query! Please try again"
-
-
+class previewView extends View {
+    _parentElement = ""
 
     _generateMarkup() {
-        return this._data.map(this._generateMarkupPreview).join("")
-    }
-    _generateMarkupPreview(result) {
         const id = window.location.hash.slice(1)
         /*
 
@@ -21,13 +14,13 @@ class ResultsView extends View {
 
          */
         return `   <li class="preview">
-            <a class="preview__link ${result.id === id ? "preview__link--active" : ""}" href="#${result.id}">
+            <a class="preview__link ${this._data.id === id ? "preview__link--active" : ""}" href="#${this._data.id}">
               <figure class="preview__fig">
-                <img src="${result.image}" alt="${result.title}" />
+                <img src="${this._data.image}" alt="${this._data.title}" />
               </figure>
               <div class="preview__data">
-                <h4 class="preview__title">${result.title}</h4>
-                <p class="preview__publisher">${result.publisher}</p>
+                <h4 class="preview__title">${this._data.title}</h4>
+                <p class="preview__publisher">${this._data.publisher}</p>
                
               </div>
             </a>
@@ -36,4 +29,4 @@ class ResultsView extends View {
 
 }
 
-export default new ResultsView()
+export default new previewView()
